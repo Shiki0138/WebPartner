@@ -11,6 +11,10 @@ import ContactPage from './pages/ContactPage';
 import PricingPage from './pages/PricingPage';
 import TermsPage from './pages/TermsPage';
 import PrivacyPage from './pages/PrivacyPage';
+import CaseStudiesPage from './pages/CaseStudiesPage';
+import BlogPage from './pages/BlogPage';
+import NewsPage from './pages/NewsPage';
+import HelpPage from './pages/HelpPage';
 
 function App() {
   return (
@@ -27,6 +31,10 @@ function App() {
         <Route path="/pricing" element={<PricingPage />} />
         <Route path="/terms" element={<TermsPage />} />
         <Route path="/privacy" element={<PrivacyPage />} />
+        <Route path="/case-studies" element={<CaseStudiesPage />} />
+        <Route path="/blog" element={<BlogPage />} />
+        <Route path="/news" element={<NewsPage />} />
+        <Route path="/help" element={<HelpPage />} />
       </Routes>
     </Router>
   );

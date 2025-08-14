@@ -43,13 +43,13 @@ const Navbar: React.FC = () => {
       href: '/pricing'
     },
     {
-      label: '会社情報',
-      href: '/about',
+      label: 'リソース',
+      href: '/resources',
       dropdown: [
-        { label: '企業理念', href: '/about#philosophy' },
-        { label: 'チーム', href: '/about#team' },
-        { label: 'パートナー', href: '/about#partners' },
-        { label: 'お知らせ', href: '/news' }
+        { label: '導入事例', href: '/case-studies' },
+        { label: 'ブログ', href: '/blog' },
+        { label: 'お知らせ', href: '/news' },
+        { label: 'ヘルプセンター', href: '/help' }
       ]
     },
     {
