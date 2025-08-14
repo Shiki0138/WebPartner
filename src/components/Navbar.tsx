@@ -24,20 +24,19 @@ const Navbar: React.FC = () => {
       href: '/'
     },
     {
-      label: '機能',
+      label: 'AIサービス',
       href: '/features',
       dropdown: [
-        { label: 'AI営業アシスタント', href: '/features#ai-assistant' },
-        { label: 'AIヒートマップ分析', href: '/features#heatmap' },
-        { label: 'AIコンテンツマネージャー', href: '/features#content' },
-        { label: 'パーソナライズエンジン', href: '/features#personalization' },
-        { label: 'ビジネスインサイトAI', href: '/features#insights' },
-        { label: 'マルチチャネル連携', href: '/features#integration' }
+        { label: 'AI営業代行システム', href: '/sales-ai' },
+        { label: 'AI人事・採用システム', href: '/hr-ai' },
+        { label: 'AI顧客サポート', href: '/customer-support-ai' },
+        { label: 'AI経営参謀', href: '/strategy-ai' },
+        { label: 'AI品質管理システム', href: '/quality-ai' }
       ]
     },
     {
-      label: '導入事例',
-      href: '/case-studies'
+      label: '機能詳細',
+      href: '/features'
     },
     {
       label: '料金プラン',
@@ -52,6 +51,10 @@ const Navbar: React.FC = () => {
         { label: 'パートナー', href: '/about#partners' },
         { label: 'お知らせ', href: '/news' }
       ]
+    },
+    {
+      label: 'お問い合わせ',
+      href: '/contact'
     }
   ];
   
