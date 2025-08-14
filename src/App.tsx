@@ -10,7 +10,7 @@ import QualityAIPage from './pages/QualityAIPage';
 
 function App() {
   return (
-    <Router>
+    <Router basename="/WebPartner">
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/features" element={<FeaturesPage />} />

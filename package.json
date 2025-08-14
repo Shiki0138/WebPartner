@@ -2,6 +2,7 @@
   "name": "ai-web-partner",
   "version": "1.0.0",
   "description": "AI Web Partner - Next Generation Web System",
+  "homepage": "https://shiki0138.github.io/WebPartner",
   "private": true,
   "dependencies": {
     "@types/node": "^20.10.0",
