@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LivePitch - もう営業担当の採用で悩まない</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Hiragino Sans', 'Meiryo', sans-serif;
+            line-height: 1.8;
+            color: #333;
+            background: #fff;
+            overflow-x: hidden;
+        }
+        
+        .section {
+            min-height: 100vh;
+            padding: 80px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+        }
+        
+        /* ヒーローセクション */
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 3.5em;
+            margin-bottom: 30px;
+            animation: fadeInUp 1s ease;
+        }
+        
+        .hero .subtitle {
+            font-size: 1.8em;
+            margin-bottom: 50px;
+            animation: fadeInUp 1s ease 0.2s both;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background: white;
+            color: #667eea;
+            padding: 20px 50px;
+            font-size: 1.3em;
+            font-weight: bold;
+            border-radius: 50px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            animation: fadeInUp 1s ease 0.4s both;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        /* 悩みセクション */
+        .problems {
+            background: #f8f9fa;
+        }
+        
+        .problems h2 {
+            font-size: 2.5em;
+            text-align: center;
+            margin-bottom: 60px;
+            color: #333;
+        }
+        
+        .problem-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+        
+        .problem-item {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .problem-item::before {
+            content: '😰';
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            font-size: 100px;
+            opacity: 0.1;
+        }
+        
+        .problem-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+        }
+        
+        .problem-item h3 {
+            font-size: 1.5em;
+            color: #dc3545;
+            margin-bottom: 15px;
+        }
+        
+        /* ソリューションセクション */
+        .solution {
+            background: white;
+            text-align: center;
+        }
+        
+        .solution h2 {
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            color: #667eea;
+        }
+        
+        .solution-steps {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            margin: 60px 0;
+        }
+        
+        .step {
+            padding: 30px;
+            position: relative;
+        }
+        
+        .step-number {
+            display: inline-block;
+            width: 60px;
+            height: 60px;
+            background: #667eea;
+            color: white;
+            border-radius: 50%;
+            font-size: 1.5em;
+            font-weight: bold;
+            line-height: 60px;
+            margin-bottom: 20px;
+        }
+        
+        .step h3 {
+            font-size: 1.4em;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        
+        .step::after {
+            content: '→';
+            position: absolute;
+            right: -20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 2em;
+            color: #ddd;
+        }
+        
+        .step:last-child::after {
+            display: none;
+        }
+        
+        /* 事例セクション */
+        .cases {
+            background: #f8f9fa;
+        }
+        
+        .cases h2 {
+            font-size: 2.5em;
+            text-align: center;
+            margin-bottom: 60px;
+            color: #333;
+        }
+        
+        .case-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+        }
+        
+        .case-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .case-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+        }
+        
+        .case-header {
+            background: #667eea;
+            color: white;
+            padding: 20px;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+        
+        .case-content {
+            padding: 30px;
+        }
+        
+        .case-problem {
+            color: #dc3545;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .case-result {
+            color: #28a745;
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-top: 20px;
+        }
+        
+        /* 料金セクション */
+        .pricing {
+            background: white;
+        }
+        
+        .pricing h2 {
+            font-size: 2.5em;
+            text-align: center;
+            margin-bottom: 60px;
+            color: #333;
+        }
+        
+        .pricing-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .pricing-card {
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 15px;
+            padding: 40px;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .pricing-card.recommended {
+            border-color: #667eea;
+            transform: scale(1.05);
+        }
+        
+        .pricing-card.recommended::before {
+            content: 'おすすめ';
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #667eea;
+            color: white;
+            padding: 5px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+        
+        .pricing-card:hover {
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+        
+        .plan-name {
+            font-size: 1.8em;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #667eea;
+        }
+        
+        .plan-price {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 30px;
+        }
+        
+        .plan-price span {
+            font-size: 0.5em;
+            color: #666;
+        }
+        
+        .plan-features {
+            list-style: none;
+            margin-bottom: 30px;
+        }
+        
+        .plan-features li {
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        /* FAQ セクション */
+        .faq {
+            background: #f8f9fa;
+        }
+        
+        .faq h2 {
+            font-size: 2.5em;
+            text-align: center;
+            margin-bottom: 60px;
+            color: #333;
+        }
+        
+        .faq-list {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .faq-item {
+            background: white;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .faq-question {
+            padding: 25px;
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+            position: relative;
+            padding-right: 50px;
+        }
+        
+        .faq-question::after {
+            content: '+';
+            position: absolute;
+            right: 25px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.5em;
+            transition: transform 0.3s ease;
+        }
+        
+        .faq-item.active .faq-question::after {
+            transform: translateY(-50%) rotate(45deg);
+        }
+        
+        .faq-answer {
+            padding: 0 25px;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .faq-item.active .faq-answer {
+            padding: 0 25px 25px;
+            max-height: 500px;
+        }
+        
+        /* CTA セクション */
+        .final-cta {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+            padding: 100px 20px;
+        }
+        
+        .final-cta h2 {
+            font-size: 3em;
+            margin-bottom: 30px;
+        }
+        
+        .final-cta p {
+            font-size: 1.5em;
+            margin-bottom: 50px;
+        }
+        
+        .contact-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .contact-card {
+            background: rgba(255,255,255,0.2);
+            padding: 30px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+        
+        .contact-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255,255,255,0.3);
+        }
+        
+        .contact-card h3 {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+        }
+        
+        .contact-card a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+        
+        /* アニメーション */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+        
+        .animate-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* レスポンシブ */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5em;
+            }
+            
+            .hero .subtitle {
+                font-size: 1.3em;
+            }
+            
+            .solution-steps {
+                grid-template-columns: 1fr;
+            }
+            
+            .step::after {
+                display: none;
+            }
+            
+            .pricing-card.recommended {
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- ヒーローセクション -->
+    <section class="section hero">
+        <div class="container">
+            <h1>もう、営業担当の採用で悩まない。</h1>
+            <p class="subtitle">AIが24時間365日、あなたの代わりに新規開拓</p>
+            <a href="#contact" class="cta-button">無料相談を予約する</a>
+        </div>
+    </section>
+
+    <!-- 悩みセクション -->
+    <section class="section problems">
+        <div class="container">
+            <h2>こんなお悩みありませんか？</h2>
+            <div class="problem-list">
+                <div class="problem-item animate-on-scroll">
+                    <h3>営業担当が採用できない</h3>
+                    <p>求人を出しても応募がない。やっと採用できてもすぐに辞めてしまう。営業経験者の採用コストは年々上昇...</p>
+                </div>
+                <div class="problem-item animate-on-scroll">
+                    <h3>既存スタッフが高齢化</h3>
+                    <p>ベテラン営業マンの平均年齢は50歳超え。若手は営業職を敬遠。このままでは5年後に営業部門が...</p>
+                </div>
+                <div class="problem-item animate-on-scroll">
+                    <h3>新規開拓する時間がない</h3>
+                    <p>既存顧客の対応で手一杯。新規開拓まで手が回らない。でも新規がないと将来の成長が...</p>
+                </div>
+                <div class="problem-item animate-on-scroll">
+                    <h3>MAツールは高額で難しい</h3>
+                    <p>月額30万円のツールを導入したけど使いこなせない。結局メール配信しかできていない...</p>
+                </div>
+                <div class="problem-item animate-on-scroll">
+                    <h3>テレアポ・飛込みは効果なし</h3>
+                    <p>100件電話して商談1件。飛び込み営業は門前払い。時代遅れの営業手法では限界...</p>
+                </div>
+                <div class="problem-item animate-on-scroll">
+                    <h3>生成AIの活用方法が不明</h3>
+                    <p>ChatGPTは使ってみたけど営業にどう活かせばいいか分からない。競合に遅れを取りたくない...</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ソリューションセクション -->
+    <section class="section solution">
+        <div class="container">
+            <h2>LivePitchが解決します</h2>
+            <p style="font-size: 1.3em; margin-bottom: 40px;">営業担当ゼロでも売上が上がる3つの理由</p>
+            
+            <div class="solution-steps">
+                <div class="step animate-on-scroll">
+                    <div class="step-number">1</div>
+                    <h3>お客様ごとに"専用提案"を自動作成</h3>
+                    <p>相手の会社情報を分析し、課題と解決策を提案。まるでベテラン営業マンが下調べしたような内容に。</p>
+                </div>
+                <div class="step animate-on-scroll">
+                    <div class="step-number">2</div>
+                    <h3>証拠付きだから信頼される</h3>
+                    <p>「売上20%UP」には根拠データ付き。数字は嘘をつかない、AIも嘘をつかない設計。</p>
+                </div>
+                <div class="step animate-on-scroll">
+                    <div class="step-number">3</div>
+                    <h3>ワンクリックで商談予約</h3>
+                    <p>メール内のボタンを押すだけで日程調整完了。ZoomURLも自動発行で手間いらず。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 事例セクション -->
+    <section class="section cases">
+        <div class="container">
+            <h2>導入企業様の声</h2>
+            <div class="case-grid">
+                <div class="case-card animate-on-scroll">
+                    <div class="case-header">建設会社A社（従業員15名）</div>
+                    <div class="case-content">
+                        <p class="case-problem">課題：営業部長が退職、新規受注がストップ</p>
+                        <p>LivePitchを導入してわずか3ヶ月。自動で送られるメールから問い合わせが続々と。営業経験ゼロの事務スタッフでも商談対応できるようになりました。</p>
+                        <p class="case-result">結果：新規商談42件、受注8件（2,400万円）</p>
+                    </div>
+                </div>
+                <div class="case-card animate-on-scroll">
+                    <div class="case-header">士業B事務所（従業員5名）</div>
+                    <div class="case-content">
+                        <p class="case-problem">課題：所長（68歳）しか営業できない</p>
+                        <p>所長の人脈に頼った営業から脱却。AIが見込み客を発掘し、診断レポートで価値を提供。若手スタッフも自信を持って商談できるように。</p>
+                        <p class="case-result">結果：月5件→月23件の相談予約</p>
+                    </div>
+                </div>
+                <div class="case-card animate-on-scroll">
+                    <div class="case-header">製造業C社（従業員30名）</div>
+                    <div class="case-content">
+                        <p class="case-problem">課題：展示会以外の新規開拓手段なし</p>
+                        <p>コロナで展示会が中止になり途方に暮れていました。LivePitchのメール営業で大手企業からも問い合わせが。もう展示会だけに頼りません。</p>
+                        <p class="case-result">結果：大手企業3社と新規取引開始</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 料金セクション -->
+    <section class="section pricing">
+        <div class="container">
+            <h2>シンプルな料金プラン</h2>
+            <div class="pricing-cards">
+                <div class="pricing-card animate-on-scroll">
+                    <h3 class="plan-name">スタータープラン</h3>
+                    <div class="plan-price">39,000<span>円/月</span></div>
+                    <ul class="plan-features">
+                        <li>メール2,000通/月</li>
+                        <li>専用LP自動生成</li>
+                        <li>ワンクリック予約</li>
+                        <li>基本サポート</li>
+                    </ul>
+                    <a href="#contact" class="cta-button" style="background: #667eea; color: white;">このプランで始める</a>
+                </div>
+                <div class="pricing-card recommended animate-on-scroll">
+                    <h3 class="plan-name">グロースプラン</h3>
+                    <div class="plan-price">98,000<span>円/月</span></div>
+                    <ul class="plan-features">
+                        <li>メール10,000通/月</li>
+                        <li>診断レポート作成</li>
+                        <li>ROI自動計算</li>
+                        <li>優先サポート</li>
+                        <li>成功事例の共有</li>
+                    </ul>
+                    <a href="#contact" class="cta-button" style="background: #667eea; color: white;">このプランで始める</a>
+                </div>
+            </div>
+            <p style="text-align: center; margin-top: 40px; font-size: 1.2em;">
+                <strong>成果報酬オプション：</strong>商談1件につき10,000円<br>
+                <span style="color: #667eea;">成果が出た分だけお支払い。リスクゼロで始められます。</span>
+            </p>
+        </div>
+    </section>
+
+    <!-- FAQ セクション -->
+    <section class="section faq">
+        <div class="container">
+            <h2>よくあるご質問</h2>
+            <div class="faq-list">
+                <div class="faq-item animate-on-scroll">
+                    <div class="faq-question">本当にAIだけで営業できるの？</div>
+                    <div class="faq-answer">
+                        <p>AIは「新規開拓」に特化しています。興味を持ったお客様との商談は、お客様自身で行っていただきます。AIが最も大変な「見込み客の発掘」を代行し、商談の機会を創出します。</p>
+                    </div>
+                </div>
+                <div class="faq-item animate-on-scroll">
+                    <div class="faq-question">迷惑メールにならない？</div>
+                    <div class="faq-answer">
+                        <p>到達率92%以上を維持しています。相手企業の課題に合わせた価値ある情報だけを送るため、クレームはほぼゼロ。むしろ「参考になった」という声をいただいています。</p>
+                    </div>
+                </div>
+                <div class="faq-item animate-on-scroll">
+                    <div class="faq-question">うちの業界でも使える？</div>
+                    <div class="faq-answer">
+                        <p>建設、製造、士業、IT、小売など幅広い業界で実績があります。B2Bビジネスであれば、ほとんどの業界でご活用いただけます。無料相談で詳しくご案内します。</p>
+                    </div>
+                </div>
+                <div class="faq-item animate-on-scroll">
+                    <div class="faq-question">解約はいつでもできる？</div>
+                    <div class="faq-answer">
+                        <p>最低契約期間はありません。1ヶ月単位でいつでも解約可能です。まずは3ヶ月お試しいただき、効果を実感できなければ遠慮なく解約してください。</p>
+                    </div>
+                </div>
+                <div class="faq-item animate-on-scroll">
+                    <div class="faq-question">導入にどれくらい時間がかかる？</div>
+                    <div class="faq-answer">
+                        <p>最短3日で配信開始できます。初回ヒアリング（30分）の後、1日で初期設定を完了。その後すぐに配信を開始し、早ければ1週間以内に最初の商談が入ります。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 最終CTA -->
+    <section class="final-cta" id="contact">
+        <div class="container">
+            <h2>今すぐ無料相談</h2>
+            <p>営業の未来を、一緒に作りましょう</p>
+            
+            <div class="contact-options">
+                <div class="contact-card">
+                    <h3>📞 お電話</h3>
+                    <a href="tel:0120-XXX-XXX">0120-XXX-XXX</a>
+                    <p>平日 9:00-18:00</p>
+                </div>
+                <div class="contact-card">
+                    <h3>💻 オンライン予約</h3>
+                    <a href="https://livepitch.jp/consultation">30分無料相談を予約</a>
+                    <p>24時間受付中</p>
+                </div>
+                <div class="contact-card">
+                    <h3>📧 メール</h3>
+                    <a href="mailto:info@livepitch.jp">info@livepitch.jp</a>
+                    <p>1営業日以内に返信</p>
+                </div>
+            </div>
+            
+            <div style="margin-top: 60px; padding: 40px; background: rgba(255,255,255,0.2); border-radius: 20px;">
+                <h3 style="font-size: 2em; margin-bottom: 20px;">🎁 期間限定キャンペーン</h3>
+                <p style="font-size: 1.3em;">今なら初期費用0円 + 最初の1ヶ月半額！</p>
+                <p style="margin-top: 15px;">通常99,000円の初期設定費用 → <strong style="font-size: 1.5em;">0円</strong></p>
+                <p>※2024年3月31日までにお申し込みの方限定</p>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // スクロールアニメーション
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+        
+        document.querySelectorAll('.animate-on-scroll').forEach(el => {
+            observer.observe(el);
+        });
+        
+        // FAQ アコーディオン
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const faqItem = question.parentElement;
+                faqItem.classList.toggle('active');
+                
+                // 他のFAQを閉じる
+                document.querySelectorAll('.faq-item').forEach(item => {
+                    if (item !== faqItem) {
+                        item.classList.remove('active');
+                    }
+                });
+            });
+        });
+        
+        // スムーズスクロール
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

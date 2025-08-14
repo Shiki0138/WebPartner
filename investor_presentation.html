@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LivePitch - 投資家向けプレゼンテーション</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Helvetica Neue', Arial, 'Hiragino Sans', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+        }
+        
+        .slide {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+        
+        .slide.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .slide-content {
+            max-width: 1200px;
+            width: 100%;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            padding: 60px;
+        }
+        
+        h1 {
+            font-size: 3em;
+            color: #1a1a1a;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+        
+        h2 {
+            font-size: 2.2em;
+            color: #2563eb;
+            margin-bottom: 30px;
+            font-weight: 600;
+        }
+        
+        h3 {
+            font-size: 1.6em;
+            color: #1a1a1a;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+        
+        .tagline {
+            font-size: 1.5em;
+            color: #666;
+            margin-bottom: 40px;
+        }
+        
+        .problem-box {
+            background: #fee2e2;
+            border-left: 5px solid #dc2626;
+            padding: 30px;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+        
+        .solution-box {
+            background: #dbeafe;
+            border-left: 5px solid #2563eb;
+            padding: 30px;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+        
+        .metric {
+            display: inline-block;
+            margin: 20px 30px 20px 0;
+            text-align: center;
+        }
+        
+        .metric-value {
+            font-size: 3em;
+            color: #2563eb;
+            font-weight: 700;
+            display: block;
+        }
+        
+        .metric-label {
+            font-size: 1.1em;
+            color: #666;
+            margin-top: 10px;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+        
+        .feature-card {
+            background: #f8fafc;
+            padding: 30px;
+            border-radius: 15px;
+            border: 2px solid #e2e8f0;
+            transition: all 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border-color: #2563eb;
+        }
+        
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin: 40px 0;
+        }
+        
+        .team-member {
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .team-member .role {
+            font-weight: 600;
+            color: #2563eb;
+            margin-bottom: 5px;
+        }
+        
+        .cta {
+            background: #2563eb;
+            color: white;
+            padding: 20px 40px;
+            font-size: 1.3em;
+            border-radius: 10px;
+            text-align: center;
+            margin: 40px auto;
+            display: inline-block;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .cta:hover {
+            background: #1d4ed8;
+            transform: scale(1.05);
+        }
+        
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 4px;
+            background: #2563eb;
+            transition: width 0.3s ease;
+            z-index: 1000;
+        }
+        
+        .nav-dots {
+            position: fixed;
+            right: 30px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 100;
+        }
+        
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #ccc;
+            margin: 10px 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .dot.active {
+            background: #2563eb;
+            transform: scale(1.5);
+        }
+        
+        @media (max-width: 768px) {
+            .slide-content {
+                padding: 30px;
+            }
+            h1 {
+                font-size: 2em;
+            }
+            h2 {
+                font-size: 1.6em;
+            }
+            .team-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar" id="progressBar"></div>
+    
+    <div class="nav-dots">
+        <div class="dot active" data-slide="0"></div>
+        <div class="dot" data-slide="1"></div>
+        <div class="dot" data-slide="2"></div>
+        <div class="dot" data-slide="3"></div>
+        <div class="dot" data-slide="4"></div>
+        <div class="dot" data-slide="5"></div>
+        <div class="dot" data-slide="6"></div>
+    </div>
+
+    <!-- Slide 1: タイトル -->
+    <div class="slide active">
+        <div class="slide-content" style="text-align: center;">
+            <h1>LivePitch</h1>
+            <p class="tagline">AIが変える、日本の営業の未来</p>
+            <div style="margin: 60px 0;">
+                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Ccircle cx='100' cy='100' r='80' fill='%232563eb' opacity='0.2'/%3E%3Cpath d='M100 40 L130 80 L120 80 L120 120 L80 120 L80 80 L70 80 Z' fill='%232563eb'/%3E%3Ccircle cx='100' cy='140' r='15' fill='%232563eb'/%3E%3C/svg%3E" width="150" height="150" alt="LivePitch Logo">
+            </div>
+            <h2>営業担当ゼロでも売れる会社へ</h2>
+            <p style="font-size: 1.3em; color: #666; margin-top: 30px;">投資家向けプレゼンテーション</p>
+        </div>
+    </div>
+
+    <!-- Slide 2: 課題 -->
+    <div class="slide">
+        <div class="slide-content">
+            <h2>日本の中小企業が直面する危機</h2>
+            <div class="problem-box">
+                <h3>78%の企業が営業人材不足</h3>
+                <ul style="font-size: 1.2em; line-height: 2;">
+                    <li>営業職の有効求人倍率：2.8倍（採用困難）</li>
+                    <li>営業担当の平均年齢：47歳（高齢化進行）</li>
+                    <li>新規開拓の成功率：0.5%以下（非効率）</li>
+                    <li>MAツール導入企業の65%が活用できず</li>
+                </ul>
+            </div>
+            <div style="margin-top: 40px;">
+                <div class="metric">
+                    <span class="metric-value">385万社</span>
+                    <span class="metric-label">国内SMB企業数</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-value">3,600億円</span>
+                    <span class="metric-label">潜在市場規模</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 3: ソリューション -->
+    <div class="slide">
+        <div class="slide-content">
+            <h2>LivePitchが実現する革新</h2>
+            <div class="solution-box">
+                <h3>メール→LP→商談を"その相手専用"にリアルタイム生成</h3>
+            </div>
+            
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h3>🚀 リアルタイム生成</h3>
+                    <p>クリックした瞬間に相手企業専用のLPが完成。相手の興味が最高潮の時に最適な提案を提示。</p>
+                </div>
+                <div class="feature-card">
+                    <h3>📊 証拠ベースAI</h3>
+                    <p>数値はDBから、表現のみAIが生成。「根拠を見る」ボタンで信頼性を担保。</p>
+                </div>
+                <div class="feature-card">
+                    <h3>🎯 自動最適化</h3>
+                    <p>到達率・反応率をリアルタイム監視。問題があれば自動でトーンダウン。</p>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 40px;">
+                <strong style="font-size: 1.3em;">従来：画一的メール → 反応率0.5%</strong><br>
+                <strong style="font-size: 1.5em; color: #2563eb;">LivePitch：AI個別最適化 → 反応率5%以上</strong>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 4: 実績 -->
+    <div class="slide">
+        <div class="slide-content">
+            <h2>実証済みの成果</h2>
+            
+            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px; margin: 40px 0;">
+                <div>
+                    <h3>MVP実績（3ヶ月）</h3>
+                    <div class="metric">
+                        <span class="metric-value">92%</span>
+                        <span class="metric-label">受信箱到達率</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-value">5.2%</span>
+                        <span class="metric-label">メール反応率</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-value">32%</span>
+                        <span class="metric-label">商談化率</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-value">320%</span>
+                        <span class="metric-label">6ヶ月ROI</span>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3>導入企業の声</h3>
+                    <div style="background: #f8fafc; padding: 30px; border-radius: 10px; margin: 20px 0;">
+                        <p style="font-style: italic; font-size: 1.1em;">「営業部長が退職して途方に暮れていたが、LivePitchで3ヶ月で2,400万円の新規受注を獲得」</p>
+                        <p style="text-align: right; margin-top: 15px;">- 建設会社A社（従業員15名）</p>
+                    </div>
+                    <div style="background: #f8fafc; padding: 30px; border-radius: 10px; margin: 20px 0;">
+                        <p style="font-style: italic; font-size: 1.1em;">「月5件だった相談予約が23件に。もう営業採用で悩まない」</p>
+                        <p style="text-align: right; margin-top: 15px;">- 士業B事務所（従業員5名）</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 5: ビジネスモデル -->
+    <div class="slide">
+        <div class="slide-content">
+            <h2>スケーラブルな収益モデル</h2>
+            
+            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px; margin: 40px 0;">
+                <div>
+                    <h3>料金体系</h3>
+                    <div style="background: #f8fafc; padding: 30px; border-radius: 10px;">
+                        <p style="font-size: 1.2em; margin-bottom: 15px;"><strong>基本料金</strong></p>
+                        <p>Starter: 3.9万円/月</p>
+                        <p>Growth: 9.8万円/月</p>
+                        <p style="font-size: 1.2em; margin: 20px 0;"><strong>成果報酬</strong></p>
+                        <p>商談化1件: 1万円</p>
+                        <p style="color: #2563eb; margin-top: 20px; font-weight: 600;">顧客の成功と収益が連動</p>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3>3年後の目標</h3>
+                    <div class="metric">
+                        <span class="metric-value">10,000社</span>
+                        <span class="metric-label">導入企業数</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-value">50億円</span>
+                        <span class="metric-label">ARR</span>
+                    </div>
+                    <div style="margin-top: 30px;">
+                        <p style="font-size: 1.1em;"><strong>Exit戦略：</strong></p>
+                        <p>大手CRM/MAベンダーへの売却<br>または IPO（5年後目標）</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 6: チーム -->
+    <div class="slide">
+        <div class="slide-content">
+            <h2>実行力のあるチーム</h2>
+            
+            <div class="team-grid">
+                <div class="team-member">
+                    <div class="role">CEO</div>
+                    <p>元Salesforce事業開発</p>
+                    <p>B2B SaaS 10年</p>
+                    <p>3社のスタートアップ支援</p>
+                </div>
+                <div class="team-member">
+                    <div class="role">CTO</div>
+                    <p>元LINE AIエンジニア</p>
+                    <p>機械学習 8年</p>
+                    <p>特許3件保有</p>
+                </div>
+                <div class="team-member">
+                    <div class="role">顧問</div>
+                    <p>中小企業診断士協会理事</p>
+                    <p>SMB支援20年</p>
+                    <p>著書3冊</p>
+                </div>
+            </div>
+            
+            <h3 style="margin-top: 50px;">資金調達</h3>
+            <div style="background: #dbeafe; padding: 40px; border-radius: 10px; text-align: center;">
+                <p style="font-size: 1.5em; margin-bottom: 20px;"><strong>シードラウンド：1.5億円調達中</strong></p>
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; margin-top: 30px;">
+                    <div>
+                        <p style="font-size: 1.3em; color: #2563eb; font-weight: 600;">60%</p>
+                        <p>開発（エンジニア5名）</p>
+                    </div>
+                    <div>
+                        <p style="font-size: 1.3em; color: #2563eb; font-weight: 600;">25%</p>
+                        <p>セールス・CS体制</p>
+                    </div>
+                    <div>
+                        <p style="font-size: 1.3em; color: #2563eb; font-weight: 600;">15%</p>
+                        <p>マーケティング</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 7: CTA -->
+    <div class="slide">
+        <div class="slide-content" style="text-align: center;">
+            <h1>営業の未来を、共に創る</h1>
+            <p class="tagline" style="font-size: 1.8em; margin: 40px 0;">日本の中小企業385万社に<br>新しい営業の形を</p>
+            
+            <div style="margin: 60px 0;">
+                <h3>なぜ今がチャンスなのか</h3>
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; max-width: 800px; margin: 30px auto; text-align: left;">
+                    <div style="padding: 20px;">
+                        <p style="font-size: 1.2em;">✓ AI技術の成熟（GPT-4、Claude）</p>
+                        <p style="font-size: 1.2em;">✓ 営業人材不足の深刻化</p>
+                    </div>
+                    <div style="padding: 20px;">
+                        <p style="font-size: 1.2em;">✓ SMBのDX投資意欲向上</p>
+                        <p style="font-size: 1.2em;">✓ 競合不在の市場</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="cta">
+                お問い合わせ：invest@livepitch.jp
+            </div>
+            
+            <p style="font-size: 1.3em; color: #666; margin-top: 40px;">
+                「営業がいなくても売れる会社」を<br>
+                すべての中小企業に
+            </p>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const dots = document.querySelectorAll('.dot');
+        const progressBar = document.getElementById('progressBar');
+        
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            dots[currentSlide].classList.remove('active');
+            
+            currentSlide = (n + slides.length) % slides.length;
+            
+            slides[currentSlide].classList.add('active');
+            dots[currentSlide].classList.add('active');
+            
+            updateProgressBar();
+        }
+        
+        function updateProgressBar() {
+            const progress = ((currentSlide + 1) / slides.length) * 100;
+            progressBar.style.width = progress + '%';
+        }
+        
+        // ドットナビゲーション
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => showSlide(index));
+        });
+        
+        // キーボードナビゲーション
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') showSlide(currentSlide + 1);
+            if (e.key === 'ArrowLeft') showSlide(currentSlide - 1);
+        });
+        
+        // タッチ/スワイプ対応
+        let touchStartX = 0;
+        let touchEndX = 0;
+        
+        document.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+        
+        document.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        });
+        
+        function handleSwipe() {
+            if (touchEndX < touchStartX - 50) showSlide(currentSlide + 1);
+            if (touchEndX > touchStartX + 50) showSlide(currentSlide - 1);
+        }
+        
+        // 初期化
+        updateProgressBar();
+    </script>
+</body>
+</html>
