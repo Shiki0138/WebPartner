@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { Users, Brain, Clock, Target, Video, FileText, TrendingDown, AlertTriangle, CheckCircle, Award } from 'lucide-react';
+import { Users, Brain, Clock, Target, Video, TrendingDown, AlertTriangle, CheckCircle, Award } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
@@ -97,7 +97,7 @@ const HRAIPage: React.FC = () => {
     }, 4000);
 
     return () => clearInterval(questionInterval);
-  }, []);
+  }, [interviewQuestions.length]);
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-green-50 to-white">

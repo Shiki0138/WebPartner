@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { Bot, TrendingUp, Clock, Users, Phone, MessageSquare, BarChart3, Zap, Target, DollarSign } from 'lucide-react';
+import { Bot, TrendingUp, Clock, Users, MessageSquare, BarChart3, Zap, Target, DollarSign } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 

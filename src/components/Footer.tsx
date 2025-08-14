@@ -69,16 +69,16 @@ const Footer: React.FC = () => {
               ビジネスの未来を創造する
             </p>
             <div className="flex gap-3">
-              <a href="#" className="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-gray-700 transition-colors">
+              <a href="https://facebook.com/aiwebpartner" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-gray-700 transition-colors" aria-label="Facebook">
                 <Facebook className="w-5 h-5" />
               </a>
-              <a href="#" className="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-gray-700 transition-colors">
+              <a href="https://twitter.com/aiwebpartner" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-gray-700 transition-colors" aria-label="Twitter">
                 <Twitter className="w-5 h-5" />
               </a>
-              <a href="#" className="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-gray-700 transition-colors">
+              <a href="https://linkedin.com/company/aiwebpartner" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-gray-700 transition-colors" aria-label="LinkedIn">
                 <Linkedin className="w-5 h-5" />
               </a>
-              <a href="#" className="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-gray-700 transition-colors">
+              <a href="https://youtube.com/@aiwebpartner" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-gray-700 transition-colors" aria-label="YouTube">
                 <Youtube className="w-5 h-5" />
               </a>
             </div>
