@@ -15,6 +15,7 @@ import CaseStudiesPage from './pages/CaseStudiesPage';
 import BlogPage from './pages/BlogPage';
 import NewsPage from './pages/NewsPage';
 import HelpPage from './pages/HelpPage';
+import DemoPage from './pages/DemoPage';
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
         <Route path="/blog" element={<BlogPage />} />
         <Route path="/news" element={<NewsPage />} />
         <Route path="/help" element={<HelpPage />} />
+        <Route path="/demo" element={<DemoPage />} />
       </Routes>
     </Router>
   );

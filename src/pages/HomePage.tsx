@@ -1,5 +1,7 @@
 import React from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
+import { Link } from 'react-router-dom';
+import { Sparkles, ArrowRight } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import HeroSection from '../components/HeroSection';
 import StatsCounter from '../components/StatsCounter';
@@ -46,6 +48,49 @@ const HomePage: React.FC = () => {
       <section className="py-20 bg-white">
         <div className="container mx-auto px-4">
           <TrustIndicators />
+        </div>
+      </section>
+      
+      {/* Interactive Demo Section */}
+      <section className="py-20 bg-gradient-to-r from-purple-600 to-pink-600">
+        <div className="container mx-auto px-4">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center"
+          >
+            <motion.div
+              animate={{ rotate: 360 }}
+              transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+              className="w-20 h-20 bg-white rounded-2xl flex items-center justify-center mx-auto mb-6"
+            >
+              <Sparkles className="w-10 h-10 text-purple-600" />
+            </motion.div>
+            
+            <h2 className="text-4xl font-bold text-white mb-6">
+              実際に体験してみませんか？
+            </h2>
+            <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
+              リアルタイムヒートマップ、AI営業チャット、経営分析ダッシュボードなど、
+              最先端のAI機能を今すぐ体験できます
+            </p>
+            
+            <Link to="/demo">
+              <motion.button
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+                className="px-8 py-4 bg-white text-purple-600 rounded-lg font-bold text-lg shadow-lg hover:shadow-xl transition-all inline-flex items-center gap-2"
+              >
+                <span>インタラクティブデモを体験</span>
+                <ArrowRight className="w-5 h-5" />
+              </motion.button>
+            </Link>
+            
+            <p className="text-white/70 mt-4 text-sm">
+              登録不要・無料・今すぐ体験
+            </p>
+          </motion.div>
         </div>
       </section>
       

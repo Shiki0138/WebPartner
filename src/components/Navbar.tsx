@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, ChevronDown } from 'lucide-react';
+import { Menu, X, ChevronDown, Sparkles } from 'lucide-react';
 
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -139,10 +139,21 @@ const Navbar: React.FC = () => {
                 </div>
               ))}
               
+              <Link to="/demo">
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="ml-2 px-5 py-2 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-lg font-medium shadow-lg hover:shadow-xl transition-shadow flex items-center gap-2"
+                >
+                  <Sparkles className="w-4 h-4" />
+                  <span>デモ体験</span>
+                </motion.button>
+              </Link>
+              
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="ml-4 px-6 py-2 bg-gradient-to-r from-blue-600 to-green-600 text-white rounded-lg font-medium shadow-lg hover:shadow-xl transition-shadow"
+                className="ml-2 px-6 py-2 bg-gradient-to-r from-blue-600 to-green-600 text-white rounded-lg font-medium shadow-lg hover:shadow-xl transition-shadow"
               >
                 無料相談
               </motion.button>
