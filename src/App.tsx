@@ -17,6 +17,7 @@ import BlogPage from './pages/BlogPage';
 import NewsPage from './pages/NewsPage';
 import HelpPage from './pages/HelpPage';
 import DemoPage from './pages/DemoPage';
+import DemoLandingPage from './pages/DemoLandingPage';
 // Company Demo Pages
 import CompanyHomePage from './pages/company/CompanyHomePage';
 import CompanyProductsPage from './pages/company/CompanyProductsPage';
@@ -50,7 +51,10 @@ function App() {
         <Route path="/blog" element={<BlogPage />} />
         <Route path="/news" element={<NewsPage />} />
         <Route path="/help" element={<HelpPage />} />
-        <Route path="/demo" element={<DemoPage />} />
+        <Route path="/demo" element={<DemoLandingPage />} />
+        <Route path="/demo/company" element={<CompanyHomePage />} />
+        <Route path="/demo/admin" element={<AdminDashboard />} />
+        <Route path="/demo/comparison" element={<DemoPage />} />
         
         {/* Company Demo Site */}
         <Route path="/company" element={<CompanyHomePage />} />
