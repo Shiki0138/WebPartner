@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Sparkles, Bot, Brain, Eye, BarChart3, MessageSquare, Zap, TrendingUp, Layers, FileText, Target } from 'lucide-react';
+import { Sparkles, Bot, Brain, Eye, BarChart3, MessageSquare, Zap, TrendingUp, Layers, FileText, Target, Edit3, Users, Link2, Lightbulb } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
@@ -209,6 +209,30 @@ const DemoPage: React.FC = () => {
       title: 'AIレポート自動生成',
       icon: FileText,
       description: '日次レポートを自動作成'
+    },
+    {
+      id: 'content',
+      title: 'AIコンテンツマネージャー',
+      icon: Edit3,
+      description: 'SEO最適化記事を自動生成'
+    },
+    {
+      id: 'personalization',
+      title: 'パーソナライズエンジン',
+      icon: Users,
+      description: '個別最適化された体験を提供'
+    },
+    {
+      id: 'integration',
+      title: 'AI統合プラットフォーム',
+      icon: Link2,
+      description: '各種ツールをシームレス連携'
+    },
+    {
+      id: 'insights',
+      title: 'ビジネスインサイト',
+      icon: Lightbulb,
+      description: '経営の未来を予測分析'
     }
   ];
 
@@ -1089,6 +1113,616 @@ const DemoPage: React.FC = () => {
                         配信先: admin@example.com, team@example.com
                       </div>
                     </div>
+                  </div>
+                </motion.div>
+              )}
+
+              {/* Content Manager Demo */}
+              {activeDemo === 'content' && (
+                <motion.div
+                  key="content"
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.9 }}
+                  className="bg-white rounded-3xl shadow-2xl overflow-hidden"
+                >
+                  <div className="bg-gradient-to-r from-orange-600 to-red-600 text-white p-6">
+                    <div className="flex items-center gap-3">
+                      <Edit3 className="w-8 h-8" />
+                      <div>
+                        <h2 className="text-2xl font-bold">AIコンテンツマネージャー</h2>
+                        <p className="opacity-90">SEO最適化された高品質コンテンツを自動生成</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="p-6">
+                    {/* Article Generation Demo */}
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                      <div>
+                        <h3 className="text-lg font-semibold mb-4">記事生成設定</h3>
+                        <div className="space-y-4">
+                          <div className="bg-gray-50 rounded-lg p-4">
+                            <label className="text-sm font-medium text-gray-700">トピック</label>
+                            <input
+                              type="text"
+                              defaultValue="中小企業のDX推進における成功要因"
+                              className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500"
+                            />
+                          </div>
+                          
+                          <div className="bg-gray-50 rounded-lg p-4">
+                            <label className="text-sm font-medium text-gray-700">ターゲットキーワード</label>
+                            <div className="mt-2 flex flex-wrap gap-2">
+                              {['DX推進', '中小企業', 'デジタル化', '業務効率化', 'AI活用'].map((keyword, i) => (
+                                <span key={i} className="bg-orange-100 text-orange-700 px-3 py-1 rounded-full text-sm">
+                                  {keyword}
+                                </span>
+                              ))}
+                            </div>
+                          </div>
+
+                          <motion.button
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                            className="w-full bg-orange-600 text-white rounded-lg py-3 font-medium hover:bg-orange-700 transition-colors"
+                          >
+                            記事を生成
+                          </motion.button>
+                        </div>
+
+                        {/* SEO Score */}
+                        <div className="mt-6 bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl p-4">
+                          <h4 className="font-semibold text-green-700 mb-3">SEOスコア分析</h4>
+                          <div className="space-y-2">
+                            {[
+                              { label: 'キーワード密度', score: 95 },
+                              { label: '読みやすさ', score: 88 },
+                              { label: '構造化データ', score: 92 },
+                              { label: 'メタ情報', score: 100 }
+                            ].map((item, i) => (
+                              <div key={i} className="flex items-center justify-between">
+                                <span className="text-sm text-gray-700">{item.label}</span>
+                                <div className="flex items-center gap-2">
+                                  <div className="w-32 bg-gray-200 rounded-full h-2">
+                                    <motion.div
+                                      initial={{ width: 0 }}
+                                      animate={{ width: `${item.score}%` }}
+                                      transition={{ duration: 1, delay: i * 0.1 }}
+                                      className="bg-green-500 h-full rounded-full"
+                                    />
+                                  </div>
+                                  <span className="text-sm font-medium">{item.score}</span>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                          <div className="mt-3 text-center">
+                            <div className="text-3xl font-bold text-green-600">94</div>
+                            <div className="text-sm text-gray-600">総合スコア</div>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Generated Article Preview */}
+                      <div className="bg-gray-50 rounded-2xl p-6">
+                        <h3 className="text-lg font-semibold mb-4">生成された記事プレビュー</h3>
+                        <motion.div
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          transition={{ delay: 0.5 }}
+                          className="bg-white rounded-lg shadow-lg p-6 space-y-4"
+                        >
+                          <h4 className="text-xl font-bold">中小企業のDX推進における5つの成功要因</h4>
+                          <div className="flex items-center gap-4 text-sm text-gray-600">
+                            <span>2024年12月14日</span>
+                            <span>読了時間: 5分</span>
+                          </div>
+                          
+                          <motion.div
+                            initial={{ height: 0 }}
+                            animate={{ height: 'auto' }}
+                            transition={{ duration: 1 }}
+                            className="space-y-3 text-gray-700"
+                          >
+                            <p>
+                              デジタルトランスフォーメーション（DX）は、もはや大企業だけの課題ではありません。
+                              中小企業こそ、DXによって競争力を大幅に向上させることができます。
+                            </p>
+                            <h5 className="font-semibold mt-4">1. 経営層の強いコミットメント</h5>
+                            <p>
+                              DX推進の最初の成功要因は、経営層の理解と強いコミットメントです。
+                              単なるIT投資ではなく、ビジネスモデルの変革として捉えることが重要です。
+                            </p>
+                            <h5 className="font-semibold mt-4">2. 小さく始めて大きく育てる</h5>
+                            <p>
+                              中小企業の強みは意思決定の速さです。まず小さなプロジェクトから始め、
+                              成功体験を積み重ねながら徐々に拡大していく戦略が効果的です。
+                            </p>
+                          </motion.div>
+
+                          <div className="mt-4 pt-4 border-t flex items-center justify-between">
+                            <div className="flex gap-2">
+                              {['DX推進', '中小企業', 'デジタル化'].map((tag, i) => (
+                                <span key={i} className="bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs">
+                                  #{tag}
+                                </span>
+                              ))}
+                            </div>
+                            <button className="text-orange-600 hover:text-orange-700 text-sm font-medium">
+                              全文を読む →
+                            </button>
+                          </div>
+                        </motion.div>
+
+                        {/* Publishing Options */}
+                        <div className="mt-4 grid grid-cols-3 gap-2">
+                          <button className="bg-blue-100 text-blue-700 px-3 py-2 rounded-lg text-sm font-medium hover:bg-blue-200">
+                            ブログに投稿
+                          </button>
+                          <button className="bg-green-100 text-green-700 px-3 py-2 rounded-lg text-sm font-medium hover:bg-green-200">
+                            SNSに配信
+                          </button>
+                          <button className="bg-purple-100 text-purple-700 px-3 py-2 rounded-lg text-sm font-medium hover:bg-purple-200">
+                            メルマガ送信
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+
+              {/* Personalization Engine Demo */}
+              {activeDemo === 'personalization' && (
+                <motion.div
+                  key="personalization"
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.9 }}
+                  className="bg-white rounded-3xl shadow-2xl overflow-hidden"
+                >
+                  <div className="bg-gradient-to-r from-pink-600 to-purple-600 text-white p-6">
+                    <div className="flex items-center gap-3">
+                      <Users className="w-8 h-8" />
+                      <div>
+                        <h2 className="text-2xl font-bold">パーソナライズエンジン</h2>
+                        <p className="opacity-90">一人ひとりに最適化された体験をリアルタイム提供</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="p-6">
+                    {/* User Profiles */}
+                    <h3 className="text-lg font-semibold mb-4">訪問者プロファイル別の表示最適化</h3>
+                    
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                      {[
+                        { 
+                          name: '田中様（初回訪問）', 
+                          type: '情報収集段階',
+                          interests: ['価格比較', '導入事例', '基本機能'],
+                          color: 'blue'
+                        },
+                        { 
+                          name: '鈴木様（3回目）', 
+                          type: '検討段階',
+                          interests: ['ROI計算', '導入支援', '契約条件'],
+                          color: 'green'
+                        },
+                        { 
+                          name: '佐藤様（既存顧客）', 
+                          type: 'アップセル対象',
+                          interests: ['新機能', 'アドオン', 'サポート'],
+                          color: 'purple'
+                        }
+                      ].map((profile, index) => (
+                        <motion.div
+                          key={index}
+                          whileHover={{ scale: 1.05 }}
+                          className={`bg-gradient-to-br from-${profile.color}-50 to-${profile.color}-100 rounded-xl p-4 cursor-pointer`}
+                        >
+                          <div className="flex items-center gap-2 mb-2">
+                            <div className={`w-10 h-10 bg-${profile.color}-500 rounded-full flex items-center justify-center text-white font-bold`}>
+                              {profile.name.charAt(0)}
+                            </div>
+                            <div>
+                              <div className="font-semibold">{profile.name}</div>
+                              <div className={`text-xs text-${profile.color}-600`}>{profile.type}</div>
+                            </div>
+                          </div>
+                          <div className="mt-3">
+                            <div className="text-xs text-gray-600 mb-1">興味関心</div>
+                            <div className="flex flex-wrap gap-1">
+                              {profile.interests.map((interest, i) => (
+                                <span key={i} className={`bg-${profile.color}-200 text-${profile.color}-700 px-2 py-1 rounded text-xs`}>
+                                  {interest}
+                                </span>
+                              ))}
+                            </div>
+                          </div>
+                        </motion.div>
+                      ))}
+                    </div>
+
+                    {/* Personalized Content Display */}
+                    <div className="bg-gray-50 rounded-2xl p-6">
+                      <h4 className="font-semibold mb-4">リアルタイムコンテンツ最適化</h4>
+                      
+                      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <div>
+                          <div className="text-sm text-gray-600 mb-2">通常の表示</div>
+                          <div className="bg-white rounded-lg shadow p-4 opacity-50">
+                            <div className="h-4 bg-gray-300 rounded w-3/4 mb-2"></div>
+                            <div className="h-4 bg-gray-300 rounded w-1/2 mb-4"></div>
+                            <div className="grid grid-cols-3 gap-2">
+                              {[1, 2, 3].map(i => (
+                                <div key={i} className="bg-gray-200 rounded h-20"></div>
+                              ))}
+                            </div>
+                          </div>
+                        </div>
+
+                        <div>
+                          <div className="text-sm text-gray-600 mb-2">パーソナライズ後</div>
+                          <motion.div
+                            initial={{ opacity: 0, scale: 0.95 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            transition={{ delay: 0.5 }}
+                            className="bg-white rounded-lg shadow-lg p-4 border-2 border-pink-500"
+                          >
+                            <h5 className="font-bold text-pink-600 mb-2">田中様におすすめのコンテンツ</h5>
+                            <p className="text-sm text-gray-700 mb-4">初めての方向けの分かりやすい資料をご用意しました</p>
+                            <div className="grid grid-cols-3 gap-2">
+                              <div className="bg-pink-100 rounded p-2 text-center">
+                                <div className="text-2xl mb-1">📊</div>
+                                <div className="text-xs">料金表</div>
+                              </div>
+                              <div className="bg-pink-100 rounded p-2 text-center">
+                                <div className="text-2xl mb-1">📈</div>
+                                <div className="text-xs">導入効果</div>
+                              </div>
+                              <div className="bg-pink-100 rounded p-2 text-center">
+                                <div className="text-2xl mb-1">🎥</div>
+                                <div className="text-xs">デモ動画</div>
+                              </div>
+                            </div>
+                          </motion.div>
+                        </div>
+                      </div>
+
+                      {/* Conversion Metrics */}
+                      <div className="mt-6 grid grid-cols-3 gap-4">
+                        <motion.div
+                          whileHover={{ y: -5 }}
+                          className="bg-white rounded-lg p-4 text-center"
+                        >
+                          <div className="text-3xl font-bold text-pink-600">3.2x</div>
+                          <div className="text-sm text-gray-600">CTR向上</div>
+                        </motion.div>
+                        <motion.div
+                          whileHover={{ y: -5 }}
+                          className="bg-white rounded-lg p-4 text-center"
+                        >
+                          <div className="text-3xl font-bold text-purple-600">+45%</div>
+                          <div className="text-sm text-gray-600">滞在時間</div>
+                        </motion.div>
+                        <motion.div
+                          whileHover={{ y: -5 }}
+                          className="bg-white rounded-lg p-4 text-center"
+                        >
+                          <div className="text-3xl font-bold text-indigo-600">89%</div>
+                          <div className="text-sm text-gray-600">満足度</div>
+                        </motion.div>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+
+              {/* Integration Platform Demo */}
+              {activeDemo === 'integration' && (
+                <motion.div
+                  key="integration"
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.9 }}
+                  className="bg-white rounded-3xl shadow-2xl overflow-hidden"
+                >
+                  <div className="bg-gradient-to-r from-cyan-600 to-blue-600 text-white p-6">
+                    <div className="flex items-center gap-3">
+                      <Link2 className="w-8 h-8" />
+                      <div>
+                        <h2 className="text-2xl font-bold">AI統合プラットフォーム</h2>
+                        <p className="opacity-90">すべてのツールをシームレスに連携</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="p-6">
+                    {/* Integration Map */}
+                    <div className="relative bg-gradient-to-br from-cyan-50 to-blue-50 rounded-2xl p-8 mb-6">
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <motion.div
+                          animate={{ rotate: 360 }}
+                          transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+                          className="w-32 h-32 border-4 border-dashed border-cyan-300 rounded-full"
+                        />
+                      </div>
+                      
+                      <div className="relative z-10">
+                        {/* Central Hub */}
+                        <motion.div
+                          whileHover={{ scale: 1.1 }}
+                          className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-24 h-24 bg-gradient-to-r from-cyan-600 to-blue-600 rounded-full flex items-center justify-center shadow-xl"
+                        >
+                          <span className="text-white font-bold text-sm text-center">AI Hub</span>
+                        </motion.div>
+
+                        {/* Connected Services */}
+                        {[
+                          { name: 'Slack', icon: '💬', angle: 0, color: 'purple' },
+                          { name: 'Google', icon: '📊', angle: 60, color: 'red' },
+                          { name: 'Salesforce', icon: '☁️', angle: 120, color: 'blue' },
+                          { name: 'Shopify', icon: '🛒', angle: 180, color: 'green' },
+                          { name: 'Mailchimp', icon: '📧', angle: 240, color: 'yellow' },
+                          { name: 'Stripe', icon: '💳', angle: 300, color: 'indigo' }
+                        ].map((service, index) => {
+                          const radius = 120;
+                          const x = Math.cos(service.angle * Math.PI / 180) * radius;
+                          const y = Math.sin(service.angle * Math.PI / 180) * radius;
+                          
+                          return (
+                            <motion.div
+                              key={service.name}
+                              initial={{ opacity: 0, scale: 0 }}
+                              animate={{ opacity: 1, scale: 1 }}
+                              transition={{ delay: index * 0.1 }}
+                              whileHover={{ scale: 1.2 }}
+                              className={`absolute w-16 h-16 bg-white rounded-xl shadow-lg flex flex-col items-center justify-center cursor-pointer`}
+                              style={{
+                                top: `calc(50% + ${y}px - 2rem)`,
+                                left: `calc(50% + ${x}px - 2rem)`
+                              }}
+                            >
+                              <div className="text-2xl">{service.icon}</div>
+                              <div className="text-xs font-medium">{service.name}</div>
+                            </motion.div>
+                          );
+                        })}
+
+                        {/* Connection Lines */}
+                        <svg className="absolute inset-0 w-full h-full pointer-events-none">
+                          {[0, 60, 120, 180, 240, 300].map((angle, i) => {
+                            const x1 = 50;
+                            const y1 = 50;
+                            const x2 = 50 + Math.cos(angle * Math.PI / 180) * 30;
+                            const y2 = 50 + Math.sin(angle * Math.PI / 180) * 30;
+                            
+                            return (
+                              <motion.line
+                                key={i}
+                                x1={`${x1}%`}
+                                y1={`${y1}%`}
+                                x2={`${x2}%`}
+                                y2={`${y2}%`}
+                                stroke="#06b6d4"
+                                strokeWidth="2"
+                                strokeDasharray="5,5"
+                                initial={{ pathLength: 0 }}
+                                animate={{ pathLength: 1 }}
+                                transition={{ duration: 1, delay: i * 0.1 }}
+                              />
+                            );
+                          })}
+                        </svg>
+                      </div>
+                    </div>
+
+                    {/* Integration Benefits */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div className="space-y-4">
+                        <h4 className="font-semibold">自動データ同期</h4>
+                        <div className="bg-cyan-50 rounded-lg p-4 space-y-3">
+                          {[
+                            { from: 'Shopify', to: 'AI分析', data: '売上データ', status: 'active' },
+                            { from: 'Google Analytics', to: 'AIレポート', data: 'アクセス解析', status: 'active' },
+                            { from: 'Slack', to: 'AI通知', data: 'チームアラート', status: 'pending' }
+                          ].map((sync, i) => (
+                            <div key={i} className="flex items-center justify-between bg-white rounded p-3">
+                              <div className="flex items-center gap-2">
+                                <span className="font-medium text-sm">{sync.from}</span>
+                                <span className="text-gray-500">→</span>
+                                <span className="font-medium text-sm">{sync.to}</span>
+                              </div>
+                              <div className="flex items-center gap-2">
+                                <span className="text-xs text-gray-600">{sync.data}</span>
+                                <div className={`w-2 h-2 rounded-full ${sync.status === 'active' ? 'bg-green-500' : 'bg-yellow-500'}`}></div>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+
+                      <div className="space-y-4">
+                        <h4 className="font-semibold">統合による効果</h4>
+                        <div className="space-y-3">
+                          <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-lg p-4">
+                            <div className="flex items-center justify-between mb-2">
+                              <span className="font-medium">作業効率</span>
+                              <span className="text-2xl font-bold text-green-600">+75%</span>
+                            </div>
+                            <div className="text-sm text-gray-600">手動作業を自動化</div>
+                          </div>
+                          <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg p-4">
+                            <div className="flex items-center justify-between mb-2">
+                              <span className="font-medium">データ精度</span>
+                              <span className="text-2xl font-bold text-blue-600">99.8%</span>
+                            </div>
+                            <div className="text-sm text-gray-600">人的ミスを排除</div>
+                          </div>
+                          <div className="bg-gradient-to-r from-purple-50 to-pink-50 rounded-lg p-4">
+                            <div className="flex items-center justify-between mb-2">
+                              <span className="font-medium">レスポンス</span>
+                              <span className="text-2xl font-bold text-purple-600">即時</span>
+                            </div>
+                            <div className="text-sm text-gray-600">リアルタイム連携</div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+
+              {/* Business Insights Demo */}
+              {activeDemo === 'insights' && (
+                <motion.div
+                  key="insights"
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.9 }}
+                  className="bg-white rounded-3xl shadow-2xl overflow-hidden"
+                >
+                  <div className="bg-gradient-to-r from-yellow-600 to-orange-600 text-white p-6">
+                    <div className="flex items-center gap-3">
+                      <Lightbulb className="w-8 h-8" />
+                      <div>
+                        <h2 className="text-2xl font-bold">ビジネスインサイト</h2>
+                        <p className="opacity-90">AIが経営の未来を予測・提案</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="p-6">
+                    {/* Predictive Analytics */}
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+                      <div className="bg-gradient-to-br from-yellow-50 to-orange-50 rounded-xl p-6">
+                        <h4 className="font-semibold mb-4">売上予測分析</h4>
+                        
+                        <div className="h-48 relative">
+                          {/* Chart visualization */}
+                          <svg className="w-full h-full">
+                            <motion.path
+                              d="M 0 150 Q 100 120 200 100 T 400 50"
+                              stroke="#f59e0b"
+                              strokeWidth="3"
+                              fill="none"
+                              initial={{ pathLength: 0 }}
+                              animate={{ pathLength: 1 }}
+                              transition={{ duration: 2 }}
+                            />
+                            <motion.path
+                              d="M 0 150 Q 100 140 200 130 T 400 120"
+                              stroke="#f59e0b"
+                              strokeWidth="2"
+                              strokeDasharray="5,5"
+                              fill="none"
+                              initial={{ pathLength: 0 }}
+                              animate={{ pathLength: 1 }}
+                              transition={{ duration: 2, delay: 0.5 }}
+                              opacity={0.5}
+                            />
+                          </svg>
+                          
+                          <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 1 }}
+                            className="absolute bottom-0 right-0 bg-white rounded-lg shadow-lg p-3"
+                          >
+                            <div className="text-sm text-gray-600">3ヶ月後予測</div>
+                            <div className="text-2xl font-bold text-orange-600">¥12.5M</div>
+                            <div className="text-xs text-green-600">+35%成長見込み</div>
+                          </motion.div>
+                        </div>
+
+                        <div className="mt-4 space-y-2">
+                          <div className="flex items-center justify-between text-sm">
+                            <span className="text-gray-600">予測精度</span>
+                            <span className="font-medium">94.3%</span>
+                          </div>
+                          <div className="flex items-center justify-between text-sm">
+                            <span className="text-gray-600">信頼区間</span>
+                            <span className="font-medium">±5%</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="space-y-4">
+                        <h4 className="font-semibold">AIからの戦略提案</h4>
+                        
+                        {[
+                          { 
+                            priority: '高',
+                            title: '新規市場への展開',
+                            impact: '+¥3.2M/年',
+                            description: '関西地域での需要が急増。早期参入で市場シェア獲得可能',
+                            color: 'red'
+                          },
+                          { 
+                            priority: '中',
+                            title: 'プライシング最適化',
+                            impact: '+¥1.8M/年',
+                            description: '競合分析により、プレミアムプランを15%値上げ可能',
+                            color: 'yellow'
+                          },
+                          { 
+                            priority: '中',
+                            title: 'カスタマーサクセス強化',
+                            impact: '+¥2.1M/年',
+                            description: 'チャーン率を3%削減可能。LTVが40%向上見込み',
+                            color: 'green'
+                          }
+                        ].map((suggestion, i) => (
+                          <motion.div
+                            key={i}
+                            initial={{ x: -20, opacity: 0 }}
+                            animate={{ x: 0, opacity: 1 }}
+                            transition={{ delay: i * 0.1 }}
+                            className="bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition-shadow cursor-pointer"
+                          >
+                            <div className="flex items-start justify-between mb-2">
+                              <div className="flex items-center gap-2">
+                                <div className={`w-2 h-2 bg-${suggestion.color}-500 rounded-full`}></div>
+                                <span className="font-medium">{suggestion.title}</span>
+                              </div>
+                              <span className="text-green-600 font-bold text-sm">{suggestion.impact}</span>
+                            </div>
+                            <p className="text-sm text-gray-600">{suggestion.description}</p>
+                          </motion.div>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Risk Alert */}
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.5 }}
+                      className="bg-gradient-to-r from-red-50 to-orange-50 border border-red-200 rounded-xl p-6"
+                    >
+                      <div className="flex items-start gap-4">
+                        <div className="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center flex-shrink-0">
+                          <span className="text-2xl">⚠️</span>
+                        </div>
+                        <div className="flex-1">
+                          <h4 className="font-semibold text-red-700 mb-2">リスクアラート：競合の動向</h4>
+                          <p className="text-sm text-gray-700 mb-3">
+                            競合A社が類似サービスを30%安い価格で展開予定。
+                            3ヶ月以内に差別化戦略の実施を推奨します。
+                          </p>
+                          <div className="flex gap-2">
+                            <button className="bg-red-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-red-700">
+                              対策を立てる
+                            </button>
+                            <button className="bg-white text-red-600 border border-red-600 px-4 py-2 rounded-lg text-sm font-medium hover:bg-red-50">
+                              詳細分析
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </motion.div>
                   </div>
                 </motion.div>
               )}
