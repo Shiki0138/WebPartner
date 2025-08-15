@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Sparkles, Bot, Brain, Eye, BarChart3, MessageSquare, Zap, TrendingUp } from 'lucide-react';
+import { Sparkles, Bot, Brain, Eye, BarChart3, MessageSquare, Zap, TrendingUp, Layers, FileText, Target } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
@@ -191,6 +191,24 @@ const DemoPage: React.FC = () => {
       title: 'AI分析ダッシュボード',
       icon: BarChart3,
       description: 'リアルタイムビジネス分析'
+    },
+    {
+      id: 'auto-heatmap',
+      title: 'AIヒートマップ自動生成',
+      icon: Layers,
+      description: 'AIがユーザー行動を自動解析'
+    },
+    {
+      id: 'predictive',
+      title: 'AI予測ページ提案',
+      icon: Target,
+      description: '訪問者に最適なページを予測'
+    },
+    {
+      id: 'report',
+      title: 'AIレポート自動生成',
+      icon: FileText,
+      description: '日次レポートを自動作成'
     }
   ];
 
@@ -691,6 +709,386 @@ const DemoPage: React.FC = () => {
                         </div>
                       </div>
                     </motion.div>
+                  </div>
+                </motion.div>
+              )}
+
+              {/* Auto Heatmap Generation Demo */}
+              {activeDemo === 'auto-heatmap' && (
+                <motion.div
+                  key="auto-heatmap"
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.9 }}
+                  className="bg-white rounded-3xl shadow-2xl overflow-hidden"
+                >
+                  <div className="bg-gradient-to-r from-indigo-600 to-blue-600 text-white p-6">
+                    <div className="flex items-center gap-3">
+                      <Layers className="w-8 h-8" />
+                      <div>
+                        <h2 className="text-2xl font-bold">AIヒートマップ自動生成</h2>
+                        <p className="opacity-90">AIが自動でユーザー行動パターンを解析・可視化</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="p-6">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                      {/* Live Heatmap Visualization */}
+                      <div className="bg-gray-50 rounded-2xl p-6">
+                        <h3 className="text-lg font-semibold mb-4">AIが検出した注目エリア</h3>
+                        <div className="relative bg-white rounded-lg shadow-inner h-96 overflow-hidden">
+                          {/* Simulated heatmap zones */}
+                          <motion.div
+                            animate={{ opacity: [0.3, 0.8, 0.3] }}
+                            transition={{ duration: 3, repeat: Infinity }}
+                            className="absolute top-10 left-10 w-32 h-32 bg-red-500 rounded-full filter blur-xl"
+                          />
+                          <motion.div
+                            animate={{ opacity: [0.5, 0.9, 0.5] }}
+                            transition={{ duration: 2.5, repeat: Infinity, delay: 0.5 }}
+                            className="absolute top-20 right-20 w-40 h-40 bg-orange-500 rounded-full filter blur-xl"
+                          />
+                          <motion.div
+                            animate={{ opacity: [0.4, 0.7, 0.4] }}
+                            transition={{ duration: 4, repeat: Infinity, delay: 1 }}
+                            className="absolute bottom-20 left-1/3 w-36 h-36 bg-yellow-500 rounded-full filter blur-xl"
+                          />
+                          
+                          {/* Overlay content */}
+                          <div className="relative z-10 p-6">
+                            <div className="bg-white/80 backdrop-blur rounded p-4 mb-4">
+                              <div className="h-4 bg-gray-300 rounded w-3/4 mb-2"></div>
+                              <div className="h-4 bg-gray-300 rounded w-1/2"></div>
+                            </div>
+                            <div className="grid grid-cols-2 gap-4">
+                              <div className="bg-white/80 backdrop-blur rounded p-3">
+                                <div className="h-20 bg-gray-300 rounded mb-2"></div>
+                                <div className="h-3 bg-gray-300 rounded w-2/3"></div>
+                              </div>
+                              <div className="bg-white/80 backdrop-blur rounded p-3">
+                                <div className="h-20 bg-gray-300 rounded mb-2"></div>
+                                <div className="h-3 bg-gray-300 rounded w-2/3"></div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* AI Insights */}
+                      <div className="space-y-4">
+                        <div className="bg-gradient-to-r from-red-50 to-orange-50 rounded-xl p-4">
+                          <h4 className="font-semibold text-red-700 mb-2">🔥 ホットスポット検出</h4>
+                          <p className="text-sm text-gray-700">購入ボタン周辺に87%のクリックが集中。配置最適化を推奨。</p>
+                          <div className="mt-2 flex items-center gap-2">
+                            <div className="flex-1 bg-red-200 rounded-full h-2">
+                              <motion.div
+                                initial={{ width: 0 }}
+                                animate={{ width: "87%" }}
+                                transition={{ duration: 1, delay: 0.5 }}
+                                className="bg-red-600 h-full rounded-full"
+                              />
+                            </div>
+                            <span className="text-sm font-medium">87%</span>
+                          </div>
+                        </div>
+
+                        <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-4">
+                          <h4 className="font-semibold text-blue-700 mb-2">💡 スクロール深度分析</h4>
+                          <p className="text-sm text-gray-700">65%のユーザーがページ中央で離脱。コンテンツ改善が必要。</p>
+                          <div className="mt-2 flex items-center gap-2">
+                            <div className="flex-1 bg-blue-200 rounded-full h-2">
+                              <motion.div
+                                initial={{ width: 0 }}
+                                animate={{ width: "65%" }}
+                                transition={{ duration: 1, delay: 0.7 }}
+                                className="bg-blue-600 h-full rounded-full"
+                              />
+                            </div>
+                            <span className="text-sm font-medium">65%</span>
+                          </div>
+                        </div>
+
+                        <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl p-4">
+                          <h4 className="font-semibold text-green-700 mb-2">⚡ リアルタイム最適化</h4>
+                          <p className="text-sm text-gray-700">AIが自動でA/Bテストを実行中。CVR +23%改善見込み。</p>
+                          <motion.div
+                            className="mt-2 grid grid-cols-2 gap-2"
+                          >
+                            <div className="bg-white rounded p-2 text-center">
+                              <div className="text-xs text-gray-600">バージョンA</div>
+                              <div className="text-lg font-bold text-gray-800">3.2%</div>
+                            </div>
+                            <div className="bg-green-100 rounded p-2 text-center border-2 border-green-500">
+                              <div className="text-xs text-green-700">バージョンB</div>
+                              <div className="text-lg font-bold text-green-700">3.9%</div>
+                            </div>
+                          </motion.div>
+                        </div>
+
+                        <motion.button
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                          className="w-full bg-indigo-600 text-white rounded-lg py-3 font-medium hover:bg-indigo-700 transition-colors"
+                        >
+                          詳細レポートを生成
+                        </motion.button>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+
+              {/* Predictive Page Suggestion Demo */}
+              {activeDemo === 'predictive' && (
+                <motion.div
+                  key="predictive"
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.9 }}
+                  className="bg-white rounded-3xl shadow-2xl overflow-hidden"
+                >
+                  <div className="bg-gradient-to-r from-emerald-600 to-teal-600 text-white p-6">
+                    <div className="flex items-center gap-3">
+                      <Target className="w-8 h-8" />
+                      <div>
+                        <h2 className="text-2xl font-bold">AI予測ページ提案システム</h2>
+                        <p className="opacity-90">訪問者の興味を予測し、最適なページを自動提案</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="p-6">
+                    {/* Current Visitor Analysis */}
+                    <div className="bg-gradient-to-r from-emerald-50 to-teal-50 rounded-xl p-6 mb-6">
+                      <div className="flex items-center justify-between mb-4">
+                        <h3 className="text-lg font-semibold">現在の訪問者分析</h3>
+                        <motion.div
+                          animate={{ opacity: [0.5, 1, 0.5] }}
+                          transition={{ duration: 2, repeat: Infinity }}
+                          className="bg-emerald-500 text-white text-xs px-3 py-1 rounded-full"
+                        >
+                          リアルタイム解析中
+                        </motion.div>
+                      </div>
+                      
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div className="bg-white rounded-lg p-4">
+                          <div className="text-sm text-gray-600 mb-1">訪問元</div>
+                          <div className="font-semibold">Google検索</div>
+                          <div className="text-xs text-emerald-600">「ECサイト 売上向上」</div>
+                        </div>
+                        <div className="bg-white rounded-lg p-4">
+                          <div className="text-sm text-gray-600 mb-1">滞在時間</div>
+                          <div className="font-semibold">2分34秒</div>
+                          <div className="text-xs text-emerald-600">平均より+45%</div>
+                        </div>
+                        <div className="bg-white rounded-lg p-4">
+                          <div className="text-sm text-gray-600 mb-1">行動パターン</div>
+                          <div className="font-semibold">情報収集型</div>
+                          <div className="text-xs text-emerald-600">導入事例に興味</div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* AI Predictions */}
+                    <h3 className="text-lg font-semibold mb-4">AIが予測する最適なコンテンツ</h3>
+                    <div className="space-y-3">
+                      {[
+                        { title: 'EC業界向けAI売上改善事例', match: 94, icon: '📈', color: 'emerald' },
+                        { title: 'ROI計算シミュレーター', match: 87, icon: '💰', color: 'blue' },
+                        { title: '無料診断：あなたのECサイト改善ポイント', match: 82, icon: '🔍', color: 'purple' },
+                        { title: '競合他社との機能比較表', match: 76, icon: '📊', color: 'orange' }
+                      ].map((prediction, index) => (
+                        <motion.div
+                          key={index}
+                          initial={{ x: -20, opacity: 0 }}
+                          animate={{ x: 0, opacity: 1 }}
+                          transition={{ delay: index * 0.1 }}
+                          className="bg-white border border-gray-200 rounded-lg p-4 hover:shadow-lg transition-shadow cursor-pointer"
+                        >
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-3">
+                              <div className="text-2xl">{prediction.icon}</div>
+                              <div>
+                                <div className="font-medium">{prediction.title}</div>
+                                <div className="text-sm text-gray-600">クリック予測率</div>
+                              </div>
+                            </div>
+                            <div className="text-right">
+                              <div className={`text-2xl font-bold text-${prediction.color}-600`}>
+                                {prediction.match}%
+                              </div>
+                              <motion.div
+                                className="w-20 bg-gray-200 rounded-full h-2 mt-1"
+                              >
+                                <motion.div
+                                  initial={{ width: 0 }}
+                                  animate={{ width: `${prediction.match}%` }}
+                                  transition={{ duration: 1, delay: 0.5 + index * 0.1 }}
+                                  className={`bg-${prediction.color}-500 h-full rounded-full`}
+                                />
+                              </motion.div>
+                            </div>
+                          </div>
+                        </motion.div>
+                      ))}
+                    </div>
+
+                    {/* Auto-suggest in action */}
+                    <motion.div
+                      initial={{ y: 20, opacity: 0 }}
+                      animate={{ y: 0, opacity: 1 }}
+                      transition={{ delay: 1 }}
+                      className="mt-6 bg-gradient-to-r from-emerald-600 to-teal-600 rounded-xl p-6 text-white"
+                    >
+                      <h4 className="text-xl font-semibold mb-3">💡 自動提案が有効です</h4>
+                      <p className="opacity-90 mb-4">
+                        このシステムを導入すると、各訪問者に最適化されたコンテンツが自動表示され、
+                        平均滞在時間が2.3倍、コンバージョン率が34%向上します。
+                      </p>
+                      <div className="grid grid-cols-3 gap-4 text-center">
+                        <div>
+                          <div className="text-3xl font-bold">2.3x</div>
+                          <div className="text-sm opacity-80">滞在時間</div>
+                        </div>
+                        <div>
+                          <div className="text-3xl font-bold">+34%</div>
+                          <div className="text-sm opacity-80">CVR向上</div>
+                        </div>
+                        <div>
+                          <div className="text-3xl font-bold">-68%</div>
+                          <div className="text-sm opacity-80">離脱率</div>
+                        </div>
+                      </div>
+                    </motion.div>
+                  </div>
+                </motion.div>
+              )}
+
+              {/* Auto Report Generation Demo */}
+              {activeDemo === 'report' && (
+                <motion.div
+                  key="report"
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.9 }}
+                  className="bg-white rounded-3xl shadow-2xl overflow-hidden"
+                >
+                  <div className="bg-gradient-to-r from-violet-600 to-purple-600 text-white p-6">
+                    <div className="flex items-center gap-3">
+                      <FileText className="w-8 h-8" />
+                      <div>
+                        <h2 className="text-2xl font-bold">AIレポート自動生成</h2>
+                        <p className="opacity-90">毎日の成果を分かりやすいレポートで自動配信</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="p-6">
+                    <div className="bg-gray-50 rounded-xl p-6 mb-6">
+                      <div className="flex items-center justify-between mb-4">
+                        <h3 className="text-lg font-semibold">本日のレポート生成状況</h3>
+                        <motion.button
+                          animate={{ rotate: 360 }}
+                          transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+                          className="bg-violet-100 text-violet-600 p-2 rounded-lg"
+                        >
+                          <Sparkles className="w-5 h-5" />
+                        </motion.button>
+                      </div>
+
+                      {/* Report Preview */}
+                      <div className="bg-white rounded-lg shadow-lg p-6">
+                        <div className="flex items-center gap-2 mb-4">
+                          <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                          <span className="text-sm text-gray-600">2024年12月14日 日次レポート</span>
+                        </div>
+
+                        <h4 className="text-xl font-bold mb-4">📊 本日のハイライト</h4>
+                        
+                        <div className="grid grid-cols-2 gap-4 mb-6">
+                          <motion.div
+                            whileHover={{ scale: 1.05 }}
+                            className="bg-gradient-to-r from-blue-50 to-blue-100 rounded-lg p-4"
+                          >
+                            <div className="text-3xl font-bold text-blue-600">¥485,000</div>
+                            <div className="text-sm text-gray-600">本日の売上</div>
+                            <div className="text-xs text-green-600 mt-1">前日比 +23%</div>
+                          </motion.div>
+                          
+                          <motion.div
+                            whileHover={{ scale: 1.05 }}
+                            className="bg-gradient-to-r from-green-50 to-green-100 rounded-lg p-4"
+                          >
+                            <div className="text-3xl font-bold text-green-600">127</div>
+                            <div className="text-sm text-gray-600">新規リード</div>
+                            <div className="text-xs text-green-600 mt-1">目標達成率 142%</div>
+                          </motion.div>
+                        </div>
+
+                        <h5 className="font-semibold mb-2">🎯 AIからの改善提案</h5>
+                        <div className="space-y-2 mb-4">
+                          <div className="flex items-start gap-2">
+                            <div className="w-1.5 h-1.5 bg-violet-500 rounded-full mt-1.5"></div>
+                            <p className="text-sm">午後2-4時の訪問者が多いため、この時間帯にキャンペーンを実施すると効果的</p>
+                          </div>
+                          <div className="flex items-start gap-2">
+                            <div className="w-1.5 h-1.5 bg-violet-500 rounded-full mt-1.5"></div>
+                            <p className="text-sm">商品Aの離脱率が高いため、価格表示を見直すことを推奨</p>
+                          </div>
+                          <div className="flex items-start gap-2">
+                            <div className="w-1.5 h-1.5 bg-violet-500 rounded-full mt-1.5"></div>
+                            <p className="text-sm">モバイルユーザーが65%に増加。モバイル最適化の優先度を上げましょう</p>
+                          </div>
+                        </div>
+
+                        <div className="border-t pt-4">
+                          <div className="flex items-center justify-between">
+                            <span className="text-sm text-gray-600">自動生成時刻: 18:00</span>
+                            <div className="flex gap-2">
+                              <button className="text-sm bg-violet-100 text-violet-700 px-3 py-1 rounded hover:bg-violet-200">
+                                PDF出力
+                              </button>
+                              <button className="text-sm bg-violet-100 text-violet-700 px-3 py-1 rounded hover:bg-violet-200">
+                                メール送信
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Report Settings */}
+                    <div className="bg-violet-50 rounded-xl p-6">
+                      <h4 className="font-semibold mb-4">レポート配信設定</h4>
+                      <div className="space-y-3">
+                        <div className="flex items-center justify-between">
+                          <span>日次レポート</span>
+                          <label className="relative inline-flex items-center cursor-pointer">
+                            <input type="checkbox" className="sr-only peer" defaultChecked />
+                            <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-violet-600"></div>
+                          </label>
+                        </div>
+                        <div className="flex items-center justify-between">
+                          <span>週次サマリー</span>
+                          <label className="relative inline-flex items-center cursor-pointer">
+                            <input type="checkbox" className="sr-only peer" defaultChecked />
+                            <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-violet-600"></div>
+                          </label>
+                        </div>
+                        <div className="flex items-center justify-between">
+                          <span>異常検知アラート</span>
+                          <label className="relative inline-flex items-center cursor-pointer">
+                            <input type="checkbox" className="sr-only peer" defaultChecked />
+                            <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-violet-600"></div>
+                          </label>
+                        </div>
+                      </div>
+                      <div className="mt-4 text-sm text-gray-600">
+                        配信先: admin@example.com, team@example.com
+                      </div>
+                    </div>
                   </div>
                 </motion.div>
               )}
