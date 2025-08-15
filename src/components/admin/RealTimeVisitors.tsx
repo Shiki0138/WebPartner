@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Users, Globe, Smartphone, Monitor, Tablet, TrendingUp, Clock } from 'lucide-react';
+import { Users, Globe, Smartphone, Monitor, Tablet, TrendingUp, Clock, Building, MapPin, Briefcase } from 'lucide-react';
 import { useVisitorTracking } from '../../contexts/VisitorTrackingContext';
 
 const RealTimeVisitors: React.FC = () => {
@@ -51,24 +51,30 @@ const RealTimeVisitors: React.FC = () => {
       </div>
 
       {/* Insights Bar */}
-      <div className="grid grid-cols-3 gap-4 mb-6 p-4 bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg">
+      <div className="grid grid-cols-4 gap-3 mb-6 p-4 bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg">
         <div className="text-center">
-          <div className="text-2xl font-bold text-gray-900">
+          <div className="text-lg font-bold text-gray-900">
             {Math.round(insights.averageEngagement)}%
           </div>
           <div className="text-xs text-gray-600">平均エンゲージメント</div>
         </div>
         <div className="text-center">
-          <div className="text-2xl font-bold text-green-600">
-            {insights.conversionProbability}%
+          <div className="text-lg font-bold text-green-600">
+            {Math.round(insights.conversionProbability)}%
           </div>
           <div className="text-xs text-gray-600">コンバージョン予測</div>
         </div>
         <div className="text-center">
-          <div className="text-2xl font-bold text-purple-600">
-            {insights.hotPages.length}
+          <div className="text-lg font-bold text-purple-600">
+            {activeVisitors.filter(v => v.role && (v.role.includes('責任者') || v.role.includes('部長'))).length}
           </div>
-          <div className="text-xs text-gray-600">人気ページ</div>
+          <div className="text-xs text-gray-600">決定権者</div>
+        </div>
+        <div className="text-center">
+          <div className="text-lg font-bold text-orange-600">
+            {activeVisitors.filter(v => v.behaviorPattern === 'researcher' || v.behaviorPattern === 'decision_maker').length}
+          </div>
+          <div className="text-xs text-gray-600">高品質リード</div>
         </div>
       </div>
 
@@ -80,7 +86,9 @@ const RealTimeVisitors: React.FC = () => {
             <p>現在アクティブな訪問者はいません</p>
           </div>
         ) : (
-          activeVisitors.map((visitor, index) => {
+          activeVisitors
+            .sort((a, b) => b.leadScore - a.leadScore) // Sort by lead score descending
+            .map((visitor, index) => {
             const DeviceIcon = getDeviceIcon(visitor.deviceType);
             return (
               <motion.div
@@ -92,19 +100,42 @@ const RealTimeVisitors: React.FC = () => {
               >
                 <div className="flex items-start justify-between">
                   <div className="flex items-start gap-3">
-                    <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center text-white font-semibold">
-                      {visitor.id.charAt(8).toUpperCase()}
+                    <div className={`w-10 h-10 rounded-full flex items-center justify-center text-white font-semibold ${
+                      visitor.leadScore >= 70 ? 'bg-gradient-to-r from-red-500 to-pink-500' :
+                      visitor.leadScore >= 50 ? 'bg-gradient-to-r from-orange-500 to-yellow-500' :
+                      'bg-gradient-to-r from-blue-500 to-purple-500'
+                    }`}>
+                      {visitor.name ? visitor.name.charAt(0) : visitor.id.charAt(8).toUpperCase()}
                     </div>
                     <div>
                       <div className="flex items-center gap-2 mb-1">
                         <span className="font-medium text-gray-900">
-                          訪問者 {visitor.id.substring(8, 13)}
+                          {visitor.name || `訪問者 ${visitor.id.substring(8, 13)}`}
                         </span>
                         <span className={`text-xs px-2 py-0.5 rounded-full ${getSourceColor(visitor.source)}`}>
                           {visitor.source}
                         </span>
                         <DeviceIcon className="w-4 h-4 text-gray-500" />
                       </div>
+                      {visitor.company && (
+                        <div className="flex items-center gap-1 text-xs text-blue-600 mb-1">
+                          <Building className="w-3 h-3" />
+                          <span className="font-medium">{visitor.company}</span>
+                          <span className="text-gray-500">({visitor.industry})</span>
+                        </div>
+                      )}
+                      {visitor.role && (
+                        <div className="flex items-center gap-1 text-xs text-purple-600 mb-1">
+                          <Briefcase className="w-3 h-3" />
+                          <span>{visitor.role}</span>
+                        </div>
+                      )}
+                      {visitor.location && (
+                        <div className="flex items-center gap-1 text-xs text-gray-500 mb-1">
+                          <MapPin className="w-3 h-3" />
+                          <span>{visitor.location.city}, {visitor.location.region}</span>
+                        </div>
+                      )}
                       <div className="text-sm text-gray-600">
                         現在: <span className="font-medium">
                           {visitor.currentPage === '/company' && 'トップページ'}
@@ -119,7 +150,16 @@ const RealTimeVisitors: React.FC = () => {
                           {formatTime(visitor.entryTime)}
                         </span>
                         <span>閲覧: {visitor.pageViews.length}ページ</span>
-                        {visitor.interests.length > 0 && (
+                        {visitor.behaviorPattern && (
+                          <span>行動: {
+                            visitor.behaviorPattern === 'explorer' ? '探索型' :
+                            visitor.behaviorPattern === 'researcher' ? '研究型' :
+                            visitor.behaviorPattern === 'decision_maker' ? '決定者型' :
+                            visitor.behaviorPattern === 'casual_browser' ? 'カジュアル型' :
+                            visitor.behaviorPattern
+                          }</span>
+                        )}
+                        {visitor.interests && visitor.interests.length > 0 && (
                           <span>関心: {visitor.interests.join(', ')}</span>
                         )}
                       </div>
@@ -133,6 +173,11 @@ const RealTimeVisitors: React.FC = () => {
                       </span>
                     </div>
                     <div className="text-xs text-gray-600">スコア</div>
+                    {visitor.conversionProbability && (
+                      <div className="text-xs text-blue-600 mt-1">
+                        {Math.round(visitor.conversionProbability * 100)}% 確率
+                      </div>
+                    )}
                   </div>
                 </div>
                 

@@ -1,23 +1,15 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { generateRealisticVisitor, generateBusinessMetrics, RealisticVisitor } from '../data/realisticVisitorData';
 
-interface Visitor {
-  id: string;
-  sessionId: string;
-  currentPage: string;
-  entryTime: Date;
-  lastActivity: Date;
+interface Visitor extends Omit<RealisticVisitor, 'pageViews'> {
   pageViews: string[];
-  actions: VisitorAction[];
-  leadScore: number;
-  interests: string[];
-  deviceType: 'desktop' | 'mobile' | 'tablet';
-  source: 'direct' | 'search' | 'social' | 'referral';
 }
 
 interface VisitorAction {
-  type: 'pageview' | 'click' | 'scroll' | 'chat' | 'download' | 'form';
+  type: 'pageview' | 'click' | 'scroll' | 'chat' | 'download' | 'form' | 'video_play' | 'pdf_view';
   timestamp: Date;
   page: string;
+  element?: string;
   details?: any;
 }
 
@@ -41,6 +33,7 @@ interface VisitorInsights {
   averageEngagement: number;
   hotPages: string[];
   conversionProbability: number;
+  businessMetrics?: any;
 }
 
 const VisitorTrackingContext = createContext<VisitorTrackingContextType | undefined>(undefined);
@@ -60,58 +53,48 @@ interface VisitorTrackingProviderProps {
 export const VisitorTrackingProvider: React.FC<VisitorTrackingProviderProps> = ({ children }) => {
   const [currentVisitor, setCurrentVisitor] = useState<Visitor | null>(null);
   const [activeVisitors, setActiveVisitors] = useState<Visitor[]>([]);
+  const [businessMetrics, setBusinessMetrics] = useState<any>(null);
 
-  // Initialize current visitor
+  // Initialize current visitor and business metrics
   useEffect(() => {
+    const realisticVisitor = generateRealisticVisitor();
     const visitor: Visitor = {
-      id: `visitor_${Math.random().toString(36).substr(2, 9)}`,
-      sessionId: `session_${Date.now()}`,
+      ...realisticVisitor,
       currentPage: window.location.pathname,
-      entryTime: new Date(),
-      lastActivity: new Date(),
       pageViews: [window.location.pathname],
-      actions: [],
-      leadScore: 0,
-      interests: [],
-      deviceType: window.innerWidth < 768 ? 'mobile' : 'desktop',
-      source: 'direct'
+      deviceType: window.innerWidth < 768 ? 'mobile' : realisticVisitor.deviceType
     };
     setCurrentVisitor(visitor);
+    setBusinessMetrics(generateBusinessMetrics());
   }, []);
 
-  // Simulate other visitors
+  // Simulate realistic visitors
   useEffect(() => {
     const simulateVisitor = () => {
-      const pages = ['/company', '/company/products', '/company/cases', '/company/contact'];
-      const sources = ['direct', 'search', 'social', 'referral'] as const;
-      const devices = ['desktop', 'mobile', 'tablet'] as const;
-      
+      const realisticVisitor = generateRealisticVisitor();
       const newVisitor: Visitor = {
-        id: `visitor_${Math.random().toString(36).substr(2, 9)}`,
-        sessionId: `session_${Date.now()}_${Math.random()}`,
-        currentPage: pages[Math.floor(Math.random() * pages.length)],
-        entryTime: new Date(),
-        lastActivity: new Date(),
-        pageViews: [pages[Math.floor(Math.random() * pages.length)]],
-        actions: [],
-        leadScore: Math.floor(Math.random() * 100),
-        interests: ['クラウド', 'セキュリティ', 'AI分析'].filter(() => Math.random() > 0.5),
-        deviceType: devices[Math.floor(Math.random() * devices.length)],
-        source: sources[Math.floor(Math.random() * sources.length)]
+        ...realisticVisitor,
+        pageViews: realisticVisitor.pageViews.map(pv => pv.page)
       };
 
       setActiveVisitors(prev => {
-        const updated = [...prev, newVisitor].slice(-20); // Keep last 20 visitors
+        const updated = [...prev, newVisitor].slice(-25); // Keep last 25 visitors for more activity
         return updated;
       });
 
-      // Remove visitor after random time
+      // Remove visitor after realistic session time
+      const sessionDuration = realisticVisitor.pageViews.reduce((sum, pv) => sum + pv.timeSpent, 0) * 1000;
       setTimeout(() => {
         setActiveVisitors(prev => prev.filter(v => v.id !== newVisitor.id));
-      }, Math.random() * 60000 + 30000); // 30-90 seconds
+      }, Math.min(sessionDuration + Math.random() * 30000, 180000)); // Max 3 minutes
     };
 
-    const interval = setInterval(simulateVisitor, 5000); // New visitor every 5 seconds
+    // Start with some initial visitors
+    for (let i = 0; i < 8; i++) {
+      setTimeout(() => simulateVisitor(), i * 2000);
+    }
+
+    const interval = setInterval(simulateVisitor, 8000); // New visitor every 8 seconds
     return () => clearInterval(interval);
   }, []);
 
@@ -156,18 +139,38 @@ export const VisitorTrackingProvider: React.FC<VisitorTrackingProviderProps> = (
 
     // AI-based predictions based on visitor behavior
     if (currentPage === '/company') {
-      predictions.push({
-        nextPage: '/company/products',
-        probability: 65,
-        reason: '新規訪問者の65%が製品ページを次に閲覧'
-      });
+      if (currentVisitor.role?.includes('責任者') || currentVisitor.role?.includes('部長')) {
+        predictions.push({
+          nextPage: '/company/products',
+          probability: 78,
+          reason: `${currentVisitor.role}は製品詳細を重視する傾向`
+        });
+      } else {
+        predictions.push({
+          nextPage: '/company/products',
+          probability: 65,
+          reason: '新規訪問者の65%が製品ページを次に閲覧'
+        });
+      }
       predictions.push({
         nextPage: '/company/cases',
         probability: 25,
         reason: '導入事例への関心が高い'
       });
     } else if (currentPage === '/company/products') {
-      if (currentVisitor.leadScore > 50) {
+      if (currentVisitor.behaviorPattern === 'decision_maker') {
+        predictions.push({
+          nextPage: '/company/contact',
+          probability: 82,
+          reason: '意思決定者パターン: 即座にコンタクト傾向'
+        });
+      } else if (currentVisitor.behaviorPattern === 'researcher') {
+        predictions.push({
+          nextPage: '/company/cases',
+          probability: 74,
+          reason: '研究者パターン: 詳細な事例調査を実施'
+        });
+      } else if (currentVisitor.leadScore > 50) {
         predictions.push({
           nextPage: '/company/contact',
           probability: 75,
@@ -203,37 +206,33 @@ export const VisitorTrackingProvider: React.FC<VisitorTrackingProviderProps> = (
       .map(([page]) => page);
 
     const conversionProbability = currentVisitor ? 
-      Math.min(95, currentVisitor.leadScore * 1.2) : 0;
+      Math.min(95, currentVisitor.conversionProbability * 100) : 0;
 
     return {
       totalActive,
       averageEngagement,
       hotPages,
-      conversionProbability
+      conversionProbability,
+      businessMetrics
     };
   };
 
   const simulateVisitors = () => {
-    // Force simulate multiple visitors for demo
-    for (let i = 0; i < 5; i++) {
+    // Generate realistic demo visitors
+    for (let i = 0; i < 10; i++) {
       setTimeout(() => {
-        const pages = ['/company', '/company/products', '/company/cases'];
+        const realisticVisitor = generateRealisticVisitor();
         const visitor: Visitor = {
-          id: `demo_visitor_${i}`,
-          sessionId: `demo_session_${i}`,
-          currentPage: pages[i % pages.length],
-          entryTime: new Date(),
-          lastActivity: new Date(),
-          pageViews: [pages[i % pages.length]],
-          actions: [],
-          leadScore: 20 + i * 15,
-          interests: ['AI', 'クラウド', 'セキュリティ'].slice(0, i % 3 + 1),
-          deviceType: ['desktop', 'mobile', 'tablet'][i % 3] as any,
-          source: ['search', 'social', 'direct', 'referral'][i % 4] as any
+          ...realisticVisitor,
+          id: `demo_visitor_${i}_${Date.now()}`,
+          pageViews: realisticVisitor.pageViews.map(pv => pv.page)
         };
-        setActiveVisitors(prev => [...prev, visitor].slice(-20));
-      }, i * 1000);
+        setActiveVisitors(prev => [...prev, visitor].slice(-25));
+      }, i * 800);
     }
+    
+    // Update business metrics
+    setBusinessMetrics(generateBusinessMetrics());
   };
 
   return (
